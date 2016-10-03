@@ -6,5 +6,5 @@ end
 
 
 get '/' do
-	"Hello Heroku!"	
+	erb :index
 end
