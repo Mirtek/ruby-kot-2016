@@ -17,10 +17,13 @@ items.insert(:text => 'Hello world', :count => 0, :timecreated => 0)
 items.insert(:text => 'Top kek', :count => 0, :timecreated => 0)
 
 
-get '/hi' do
-	"Hello World!"	
+get '/' do
+	erb :input_form	
 end
 
+post '/' do
+	items.insert(:text => params[:secret_message], :count =>0, :timecreated => 0)
+end
 
 get '/message/:id' do
 	@message = items.select(:text)[:id => params[:id]][:text]
