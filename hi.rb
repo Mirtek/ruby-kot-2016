@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sequel'
 require 'aescrypt'
 require 'base64'
+require 'core_ext/time'
 
 # prod DB = Sequel.connect(ENV['DATABASE_URL'])
 DB = Sequel.sqlite # dev
@@ -13,7 +14,7 @@ DB.create_table :items do
 	Integer :timecreated
 	Integer :timetodelete
 	Integer :countlimit
-    String :fancyid
+	String :fancyid
 end
 
 items = DB[:items]
@@ -29,13 +30,13 @@ end
 post '/' do
 	fancyid = SecureRandom.urlsafe_base64
 	encoded = AESCrypt.encrypt(params[:secret_message],params[:encode_key])
-	items.insert(:text => encoded, :count =>0, :timecreated => 0, :countlimit => params[:count_limit], :timetodelete => params[:timetodelete], :fancyid => fancyid)
-	idlink = request.host_with_port+"/messagelink/"+fancyid
-	erb :message_link, :locals => {'message_link' => idlink}
+	items.insert(:text => encoded, :count =>0, :timecreated => Time.current.to_i, :countlimit => params[:count_limit], :timetodelete => params[:timetodelete], :fancyid => fancyid)
+	fancyidlink = request.host_with_port+"/messagelink/"+fancyid
+	erb :message_link, :locals => {'message_link' => fancyidlink}
 end
 
-get '/message/:id' do
-	message = items.select(:text)[:id => params[:id]][:text]
+get '/message/:fancyid' do
+	message = items.select(:text)[:fancyid => params[:fancyid]][:text]
 	erb :message, :locals => {'message' => message}
 end
 
@@ -46,6 +47,22 @@ post '/message/' do
 end
 
 get '/messagelink/:fancyid' do
+	fancyid = params[:fancyid]
+	created = items.select(:timecreated)[:fancyid => fancyid][:timecreated]
+	
+	items.where(:fancyid => fancyid).update(:count=>Sequel[:count]+1)
+	
+	count = items.select(:count)[:fancyid => fancyid][:count]
+	currenttime = Time.current.to_i
+	timetodelete = items.select(:timetodelete)[:fancyid => fancyid][:timetodelete]
+	if currenttime >= created+timetodelete
+		items.where(:fancyid => fancyid).update(:text => "Message deleted - time expired", :timecreated=>0, :count=>-1)
+	end	
+
+	if count > 5
+		items.where(:fancyid => fancyid).update(:text => "Message deleted - linkvisit expired", :timecreated=>0, :count=>-1)
+	end
 	@message = items.select(:text)[:fancyid => params[:fancyid]][:text]
-	erb :message, :locals => {'message' => @message}
+	@debugdata = items.select()[:fancyid => params[:fancyid]]
+	erb :message, :locals => {'message' => @message, 'debugdata' => @debugdata}
 end
