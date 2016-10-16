@@ -4,8 +4,8 @@ require 'aescrypt'
 require 'base64'
 require 'core_ext/time'
 
-# prod DB = Sequel.connect(ENV['DATABASE_URL'])
-DB = Sequel.sqlite # dev
+DB = Sequel.connect(ENV['DATABASE_URL'])
+#dev DB = Sequel.sqlite # dev
 
 DB.create_table :items do
 	primary_key :id
