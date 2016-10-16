@@ -7,7 +7,7 @@ require 'time'
 DB = Sequel.connect(ENV['DATABASE_URL'])
 # dev DB = Sequel.sqlite # dev
 
-run if DB.select(:items).nil?
+if DB.select(:items).nil?
 	DB.create_table :items do
 		primary_key :id
 		String :text
