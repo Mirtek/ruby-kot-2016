@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sequel'
 require 'aescrypt'
 require 'base64'
+require 'time'
 
 DB = Sequel.connect(ENV['DATABASE_URL'])
 #dev DB = Sequel.sqlite # dev
@@ -31,7 +32,7 @@ end
 post '/' do
 	fancyid = SecureRandom.urlsafe_base64
 	encoded = AESCrypt.encrypt(params[:secret_message],params[:encode_key])
-	items.insert(:text => encoded, :count =>0, :timecreated => 0, :countlimit => params[:count_limit], :timetodelete => params[:timetodelete], :fancyid => fancyid)
+	items.insert(:text => encoded, :count =>0, :timecreated => Time.now.to_i, :countlimit => params[:count_limit], :timetodelete => params[:timetodelete], :fancyid => fancyid)
 	fancyidlink = request.host_with_port+"/messagelink/"+fancyid
 	erb :message_link, :locals => {'message_link' => fancyidlink}
 end
