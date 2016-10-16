@@ -55,11 +55,11 @@ get '/messagelink/:fancyid' do
 	items.where(:fancyid => fancyid).update(:count=>Sequel[:count]+1)
 	
 	count = items.select(:count)[:fancyid => fancyid][:count]
-	# currenttime = Time.current.to_i
-	# timetodelete = items.select(:timetodelete)[:fancyid => fancyid][:timetodelete]
-	# if currenttime >= created+timetodelete
-	# 	items.where(:fancyid => fancyid).update(:text => "Message deleted - time expired", :timecreated=>0, :count=>-1)
-	# end	
+	currenttime = Time.current.to_i
+	timetodelete = items.select(:timetodelete)[:fancyid => fancyid][:timetodelete]
+	if currenttime >= created+timetodelete
+		items.where(:fancyid => fancyid).update(:text => "Message deleted - time expired", :timecreated=>0, :count=>-1)
+	end	
 
 	if count > items.select(:countlimit)[:fancyid => fancyid][:countlimit]
 		items.where(:fancyid => fancyid).update(:text => "Message deleted - linkvisit expired", :timecreated=>0, :count=>-1)
