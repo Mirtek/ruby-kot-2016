@@ -5,7 +5,7 @@ require 'base64'
 
 DB = Sequel.connect(ENV['DATABASE_URL'])
 #dev DB = Sequel.sqlite # dev
-
+#?
 DB.create_table :items do
 	primary_key :id
 	String :text
