@@ -2,20 +2,6 @@ GEM
   remote: https://rubygems.org/
   specs:
     aescrypt (1.0.0)
-    bigdecimal (1.2.8)
-    builder (3.2.2)
-    concurrent-ruby (1.0.2)
-    core_ext (0.0.6)
-      bigdecimal (~> 1.2)
-      builder (~> 3.2)
-      concurrent-ruby (~> 1.0)
-      i18n (~> 0.7)
-      json (~> 1.7, >= 1.7.7)
-      method_source (~> 0.8)
-      tzinfo (~> 1.1)
-    i18n (0.7.0)
-    json (1.8.3)
-    method_source (0.8.2)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -24,17 +10,13 @@ GEM
       rack (~> 1.5)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
-    thread_safe (0.3.5)
     tilt (2.0.5)
-    tzinfo (1.2.2)
-      thread_safe (~> 0.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   aescrypt
-  core_ext
   sequel
   sinatra
 
