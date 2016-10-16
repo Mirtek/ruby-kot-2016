@@ -1,15 +1,25 @@
 <html>
-    <head>
-        <title>F.Society Message Service</title>
-    </head>
+<head>
+	<title>F.Society Message Service</title>
+</head>
 <body>
 
-<h1>Your message</h1>
+	<h1>Your message</h1>
 
-<form action="/" method="POST">
-    <input type="textarea" name="secret_message">
-    <input type="submit">
-</form>
+	<form action="/" method="POST">
+		<input type="textarea" autocomplete="off" name="secret_message">
+		
+		<label for"enc_key">Your encode key</label>
+		<input type="text" autocomplete="off" id="enc_key" name="encode_key">
+		
+		<label for="visit_count">Delete after count of visits</label>
+		<input type="text" autocomplete="off" id="visit_count" name="count_limit">
+		
+		<label for="time_passed">Delete after time passed (in seconds)</label>
+		<input type="text" autocomplete="off" id="time_passed" name="timetodelete">
+
+		<input type="submit">
+	</form>
 
 </body>
 </html>

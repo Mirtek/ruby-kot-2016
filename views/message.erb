@@ -1,3 +1,9 @@
 <h1>F.Society</h1>
 <p>Message is:</p>
 <p><%= message %></p>
+<form action="/message/" method="POST">
+		<label for"enc_key">Your encode key</label>
+		<input type="textarea" autocomplete="off" name="encode_key">
+		<input type="hidden" name="message" value="<%= message %>">		
+		<input value="Decrypt" type="submit">
+</form>
