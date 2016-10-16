@@ -1,24 +1,27 @@
 <html>
 <head>
-	<title>F.Society Message Service</title>
+	<title>F.Society Messenger</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-	<h1>Your message</h1>
+	<h1>Secret messenger</h1>
 
 	<form action="/" method="POST">
-		<input type="textarea" autocomplete="off" name="secret_message">
+		<label for"secret">Your message:</label>
 		
-		<label for"enc_key">Your encode key</label>
+		<input type="textarea" autocomplete="off" id="secret" name="secret_message">
+		
+		<label for"enc_key">Your encode key:</label>
 		<input type="text" autocomplete="off" id="enc_key" name="encode_key">
 		
-		<label for="visit_count">Delete after count of visits</label>
-		<input type="text" autocomplete="off" id="visit_count" name="count_limit">
+		<label for="visit_count">Delete after count of visits:</label>
+		<input type="text" autocomplete="off" id="visit_count" name="count_limit" value="5">
 		
-		<label for="time_passed">Delete after time passed (in seconds)</label>
-		<input type="text" autocomplete="off" id="time_passed" name="timetodelete">
+		<label for="time_passed">Delete after <b>seconds</b> passed</label>
+		<input type="text" autocomplete="off" id="time_passed" name="timetodelete" value="60">
 
-		<input type="submit">
+		<input type="submit" value="Send">
 	</form>
 
 </body>

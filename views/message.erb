@@ -1,11 +1,19 @@
-<h1>F.Society</h1>
-<p>Message is:</p>
-<p><%= message %></p>
-<form action="/message/" method="POST">
+<html>
+<head>
+	<title>F.Society Message Service</title>
+	<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+	<h1>Encrypted message</h1>
+	<p class="ml">Message is:</p>
+	<p class="ml"><%= message %></p>
+	<form action="/message/" method="POST">
 		<label for"enc_key">Your encode key</label>
 		<input type="textarea" autocomplete="off" name="encode_key">
 		<input type="hidden" name="message" value="<%= message %>">		
 		<input value="Decrypt" type="submit">
-</form>
+	</form>
 
-<p><%= debugdata %></p>
+</body>
+</html>

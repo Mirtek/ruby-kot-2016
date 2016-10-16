@@ -1,4 +1,15 @@
-<h1>F.Society</h1>
-<p>Decrypted message is:</p>
-<p><%= message %></p>
-<h2><a href="http://<%= url %>">Send new message</a></h2>
+<html>
+<head>
+	<title>F.Society Message Service</title>
+	<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+	<article>
+		<h1>Your message is decrypted</h1>
+
+		<p class="ml">Decrypted message is:</p>
+		<h2 class="ml"><strong><%= message %></strong></h2>
+		<p class="ml"><a href="http://<%= url %>">Send new message</a></p>
+	</article>
+</body>
+</html>

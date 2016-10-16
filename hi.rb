@@ -5,9 +5,9 @@ require 'base64'
 require 'time'
 
 DB = Sequel.connect(ENV['DATABASE_URL'])
-#dev DB = Sequel.sqlite # dev
-#?
-if DB.select(:items).nil?
+# dev DB = Sequel.sqlite # dev
+
+run if DB.select(:items).nil?
 	DB.create_table :items do
 		primary_key :id
 		String :text
@@ -20,10 +20,6 @@ if DB.select(:items).nil?
 end
 
 items = DB[:items]
-
-items.insert(:text => 'Hello world', :count => 0, :timecreated => 0, :fancyid => SecureRandom.urlsafe_base64)
-items.insert(:text => 'Top kek', :count => 0, :timecreated => 0, :fancyid => "rhewkdfh")
-
 
 get '/' do
 	erb :input_form	
@@ -65,6 +61,6 @@ get '/messagelink/:fancyid' do
 		items.where(:fancyid => fancyid).update(:text => "Message deleted - linkvisit expired", :timecreated=>0, :count=>-1)
 	end
 	@message = items.select(:text)[:fancyid => params[:fancyid]][:text]
-	@debugdata = items.select()[:fancyid => params[:fancyid]]
-	erb :message, :locals => {'message' => @message, 'debugdata' => @debugdata}
+	# @debugdata = items.select()[:fancyid => params[:fancyid]]
+	erb :message, :locals => {'message' => @message}
 end
